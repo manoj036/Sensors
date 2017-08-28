@@ -23,7 +23,7 @@ import java.util.List;
 
 public class SecondActivity extends AppCompatActivity implements SensorEventListener {
 
-    GraphView graphView;
+    GraphView graphView1,graphView2,graphView3,graphView4;
 
     private List<Float> ld,ad,md,pd;
     private SensorManager sensorManager;
@@ -40,27 +40,53 @@ public class SecondActivity extends AppCompatActivity implements SensorEventList
         md = new ArrayList<Float>();
         pd = new ArrayList<Float>();
         ad = new ArrayList<Float>();
-        graphView = (GraphView)findViewById(R.id.graph);
+        graphView1 = (GraphView)findViewById(R.id.graph1);
+        graphView2 = (GraphView)findViewById(R.id.graph2);
+        graphView3 = (GraphView)findViewById(R.id.graph3);
+        graphView4 = (GraphView)findViewById(R.id.graph4);
+
         setSupportActionBar(toolbar);
 
-        graphView.getViewport().setScalable(true);
-        graphView.getViewport().setScrollable(true);
-        graphView.getViewport().setMinX(0);
-        graphView.getViewport().setMaxX(100);
-        graphView.getLegendRenderer().setVisible(true);
-        graphView.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-        graphView.getLegendRenderer().setWidth(300);
+        graphView1.getViewport().setScalable(true);
+        graphView1.getViewport().setScrollable(true);
+        graphView1.getViewport().setMinX(0);
+        graphView1.getViewport().setMaxX(100);
+        graphView1.getLegendRenderer().setVisible(true);
+        graphView1.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+        graphView1.getLegendRenderer().setWidth(300);
+        graphView2.getViewport().setScalable(true);
+        graphView2.getViewport().setScrollable(true);
+        graphView2.getViewport().setMinX(0);
+        graphView2.getViewport().setMaxX(100);
+        graphView2.getLegendRenderer().setVisible(true);
+        graphView2.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+        graphView2.getLegendRenderer().setWidth(300);
+        graphView3.getViewport().setScalable(true);
+        graphView3.getViewport().setScrollable(true);
+        graphView3.getViewport().setMinX(0);
+        graphView3.getViewport().setMaxX(100);
+        graphView3.getLegendRenderer().setVisible(true);
+        graphView3.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+        graphView3.getLegendRenderer().setWidth(300);
+        graphView4.getViewport().setScalable(true);
+        graphView4.getViewport().setScrollable(true);
+        graphView4.getViewport().setMinX(0);
+        graphView4.getViewport().setMaxX(100);
+        graphView4.getLegendRenderer().setVisible(true);
+        graphView4.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+        graphView4.getLegendRenderer().setWidth(300);
+
         accel_data=new LineGraphSeries<>();
         prox_data=new LineGraphSeries<>();
         magnet_data=new LineGraphSeries<>();
         light_data=new LineGraphSeries<>();
-        graphView.addSeries(accel_data);
+        graphView1.addSeries(accel_data);
         accel_data.setTitle("Accelerometer Data");
-        graphView.addSeries(magnet_data);
+        graphView2.addSeries(magnet_data);
         magnet_data.setTitle("Magnetometer Data");
-        graphView.addSeries(prox_data);
+        graphView3.addSeries(prox_data);
         prox_data.setTitle("Proximity Data");
-        graphView.addSeries(light_data);
+        graphView4.addSeries(light_data);
         light_data.setTitle("LUX Data");
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -110,25 +136,25 @@ public class SecondActivity extends AppCompatActivity implements SensorEventList
         Sensor sensor = event.sensor;
         if (sensor.getType() == Sensor.TYPE_ACCELEROMETER){
             value= (float) Math.sqrt(event.values[0]*event.values[0]+event.values[1]*event.values[1]+event.values[2]);
-           ad.add(value);
-            accel_data.appendData(new DataPoint(a,b),true,1000);
+            ad.add(value);
+            accel_data.appendData(new DataPoint(a,value),true,1000);
             a=a+1;
         }
         else if (sensor.getType() == Sensor.TYPE_LIGHT){
             ld.add(event.values[0]);
-            light_data.appendData(new DataPoint(a,b),true,1000);
-            a=a+1;
+            light_data.appendData(new DataPoint(b,event.values[0]),true,1000);
+            b=b+1;
         }
         else if (sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD){
             value= (float) Math.sqrt(event.values[0]*event.values[0]+event.values[1]*event.values[1]+event.values[2]);
             md.add(value);
-            magnet_data.appendData(new DataPoint(a,b),true,1000);
-            a=a+1;
+            magnet_data.appendData(new DataPoint(c,value),true,1000);
+            c=c+1;
         }
         else if (sensor.getType() == Sensor.TYPE_PROXIMITY){
             pd.add(event.values[0]);
-            prox_data.appendData(new DataPoint(a,b),true,1000);
-            a=a+1;
+            prox_data.appendData(new DataPoint(d,event.values[0]),true,1000);
+            d=d+1;
         }
     }
 
