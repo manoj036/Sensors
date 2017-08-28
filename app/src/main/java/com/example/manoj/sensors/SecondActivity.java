@@ -28,6 +28,7 @@ public class SecondActivity extends AppCompatActivity implements SensorEventList
     private List<Float> ld,ad,md,pd;
     private SensorManager sensorManager;
     int a,b,c,d;
+    float d1,d2,d3,d4;
     private LineGraphSeries<DataPoint> prox_data,light_data,accel_data,magnet_data;
     private Sensor light_sensor,accel_sensor,magn_sensor,prox_sensor;
 
@@ -133,28 +134,39 @@ public class SecondActivity extends AppCompatActivity implements SensorEventList
     @Override
     public void onSensorChanged(SensorEvent event) {
         float value;
+        a=a+1;
         Sensor sensor = event.sensor;
         if (sensor.getType() == Sensor.TYPE_ACCELEROMETER){
-            value= (float) Math.sqrt(event.values[0]*event.values[0]+event.values[1]*event.values[1]+event.values[2]);
-            ad.add(value);
-            accel_data.appendData(new DataPoint(a,value),true,1000);
-            a=a+1;
+            d1= (float) Math.sqrt(event.values[0]*event.values[0]+event.values[1]*event.values[1]+event.values[2]);
+            ad.add(d1);
+            accel_data.appendData(new DataPoint(a,d1),true,1000);
+            light_data.appendData(new DataPoint(a,d2),true,1000);
+            magnet_data.appendData(new DataPoint(a,d3),true,1000);
+            prox_data.appendData(new DataPoint(a,d4),true,1000);
         }
         else if (sensor.getType() == Sensor.TYPE_LIGHT){
             ld.add(event.values[0]);
-            light_data.appendData(new DataPoint(b,event.values[0]),true,1000);
-            b=b+1;
+            d2=event.values[0];
+            accel_data.appendData(new DataPoint(a,d1),true,1000);
+            light_data.appendData(new DataPoint(a,d2),true,1000);
+            magnet_data.appendData(new DataPoint(a,d3),true,1000);
+            prox_data.appendData(new DataPoint(a,d4),true,1000);
         }
         else if (sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD){
-            value= (float) Math.sqrt(event.values[0]*event.values[0]+event.values[1]*event.values[1]+event.values[2]*event.values[2]);
-            md.add(value);
-            magnet_data.appendData(new DataPoint(c,value),true,1000);
-            c=c+1;
+            d3= (float) Math.sqrt(event.values[0]*event.values[0]+event.values[1]*event.values[1]+event.values[2]*event.values[2]);
+            md.add(d3);
+            accel_data.appendData(new DataPoint(a,d1),true,1000);
+            light_data.appendData(new DataPoint(a,d2),true,1000);
+            magnet_data.appendData(new DataPoint(a,d3),true,1000);
+            prox_data.appendData(new DataPoint(a,d4),true,1000);
         }
         else if (sensor.getType() == Sensor.TYPE_PROXIMITY){
+            d4=event.values[0];
             pd.add(event.values[0]);
-            prox_data.appendData(new DataPoint(d,event.values[0]),true,1000);
-            d=d+1;
+            accel_data.appendData(new DataPoint(a,d1),true,1000);
+            light_data.appendData(new DataPoint(a,d2),true,1000);
+            magnet_data.appendData(new DataPoint(a,d3),true,1000);
+            prox_data.appendData(new DataPoint(a,d4),true,1000);
         }
     }
 
