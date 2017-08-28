@@ -146,7 +146,7 @@ public class SecondActivity extends AppCompatActivity implements SensorEventList
             b=b+1;
         }
         else if (sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD){
-            value= (float) Math.sqrt(event.values[0]*event.values[0]+event.values[1]*event.values[1]+event.values[2]);
+            value= (float) Math.sqrt(event.values[0]*event.values[0]+event.values[1]*event.values[1]+event.values[2]*event.values[2]);
             md.add(value);
             magnet_data.appendData(new DataPoint(c,value),true,1000);
             c=c+1;
